@@ -1,0 +1,20 @@
+# Use official lightweight Python image
+FROM python:3.11-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set work directory
+WORKDIR /app
+
+# Install system dependencies required for PostgreSQL
+RUN apt-get update && apt-get install -y libpq-dev gcc
+
+# Install python dependencies
+RUN pip install --upgrade pip
+COPY requirements.txt /app/
+RUN pip install -r requirements.txt
+
+# Copy project files
+COPY . /app/
